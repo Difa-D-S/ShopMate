@@ -1,0 +1,32 @@
+[
+    {
+        "id" : 1001,
+        "name" : "Basics to Advanced In React",
+        "price" : 99,
+        "in_stock" : true
+    },
+    {
+        "id" : 1002,
+        "name" : "Django Framework for Beginners",
+        "price" : 9000,
+        "in_stock" : true
+    },
+    {
+        "id" : 1003,
+        "name" : "The Complete Guide to Backend Development",
+        "price" : 100,
+        "in_stock" : false
+    },
+    {
+        "id" : 1004,
+        "name" : "Build a BlickChain from scratch in Go",
+        "price" : 699,
+        "in_stock" : true
+    },
+    {
+        "id" : 1005,
+        "name" : "Basics Advanced In React",
+        "price" : 3299,
+        "in_stock" : false
+    }
+]
