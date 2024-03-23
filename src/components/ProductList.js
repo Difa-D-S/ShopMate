@@ -1,55 +1,48 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useFetch } from '../Hooks/useFetch';
 
 const ProductList = () => {
-    
-    // const [counter, setCounter] = useState(0);
-    const [product, setProduct] = useState([]);
-    const [url, setUrl] = useState("");
 
-    // console.log(product);
+  const [counter, setCounter] = useState(0);
+  // const [product, setProduct] = useState([])
+  const [url, setUrl] = useState('http://localhost:8000/product')
 
-    const FetchData = useCallback(
-        async () => {
-                const response = await fetch(url);
-                const data = await response.json();
-                setProduct(data)
-    }, [url])                           // const FetchData = async () => {
-                                        //     const response = await fetch(url);
-                                        //     const data = await response.json();
-                                        //     setProduct(data)
-                                        // }
+  // console.log(product)
 
-    useEffect( () => {
-        FetchData();                  // --- --- //
-        // console.log(FetchData);          // fetch("")
-                                            // .then(response => response.json)
-                                            // .then(data => setProduct(data))
-                                            // console.log("hello")
-    }, [url])
+  const {data : product, loading, error} = useFetch(url)
 
-    // useEffect( () => {
-    //     console.log(counter);
-    // }, [counter])
+  useEffect( () => {
+      console.log(counter)
+  }, [counter])
 
   return (
-    <section>
-        {/* <p>{counter}</p> */}/
-        <div className='filter'>
-            {/* <button onClick={ () => {setCounter(counter + 1)}}>{counter}</button> */}
-            <button onClick={ () => {setUrl("")}}> All</button>
-            <button onClick={ () => {setUrl("")}}>Instock</button>
-        </div>
+    <>
+      <h1>ProductList</h1>
 
-        {product.map( (product) => (
-            <div className='card' key={product.id}>
-                <p className='id'>{product.id}</p>
-                <p className='name'>{product.name}</p>
-                <p className='info'> <span> {product.price} </span> 
-                    <span  className={product.in_stock ? "instock" : "unavailable"}> {product.in_stock ? "In stock" : "UnAvailable"} </span></p>
-            </div>
-        ))}
-        
-    </section>
+      <button onClick={() => setCounter(counter + 1)}> {counter} </button>
+
+      <span> <button onClick={ () => {setUrl("http://localhost:8000/product")}}>All</button> </span>
+      <span> <button onClick={ () => {setUrl("http://localhost:8000/product?in_stock=1")}}>InStock</button> </span>
+    <section>
+      <div>
+        {loading && <p>Loading Products...</p>}
+
+        {error && <p> Failed to Fetch</p>}
+
+      {product && product.map((product) => (
+        <div key={product.id}>
+            <p>{product.id}</p>
+            <p>{product.name}</p>
+            <p>
+              <span className='me-5'>${product.price}</span> 
+              <span>{product.in_stock ? "InStock" : "Unavailable"}</span>
+            </p>
+        </div>
+      ))}
+      </div>
+      </section>
+    
+    </>
   )
 }
 
